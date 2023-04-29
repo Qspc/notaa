@@ -1,0 +1,46 @@
+.button {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.07);
+  /* border: 0.1px solid white; */
+  border-radius: 5px;
+  align-item: center;
+  padding: 3px 20px;
+  font-size: 16px;
+  line-height: 32px;
+  font-weight: 600;
+  color: black;
+}
+
+.input {
+  padding: 0.5em 0px;
+  font: inherit;
+}
+
+.input-2 {
+  padding: 0.3em 0px;
+  width: 10rem;
+  font: inherit;
+}
+
+.section-1 {
+  margin: 25px 10px;
+}
+.section-2 {
+  margin: 11px;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  text-transform: capitalize;
+}
+
+thead {
+  font-weight: bold;
+  background-color: rgba(237, 231, 225, 1);
+  text-align: center;
+}
+
+#padding {
+  padding: 0.5rem 0.5rem;
+}
