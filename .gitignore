@@ -9,14 +9,15 @@
 /coverage
 
 # production
-/build
+/dist
 
 # misc
 .DS_Store
-.env.local
 .env.development.local
 .env.test.local
 .env.production.local
+/.nx
+/.nx/cache
 /.vscode/*
 !/.vscode/extensions.json
 .idea
@@ -27,3 +28,4 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+config.bat
