@@ -1,18 +1,20 @@
-# Notaa
+# Expo Router Example
 
-# Description
+Use [`expo-router`](https://docs.expo.dev/router/introduction/) to build native navigation using files in the `app/` directory.
 
-simple notes android apps for manage your budget when you travelling
+## 🚀 How to use
 
-# Tech Stacks
+```sh
+npx create-expo-app -e with-router
+```
 
--   [React Native](https://reactnative.dev/) - Framework utama untuk pengembangan aplikasi cross-platform
--   [TypeScript](https://www.typescriptlang.org/) - Superset JavaScript dengan static typing
--   [Expo](https://expo.dev/) - Toolchain untuk pengembangan React Native
--   [Tailwind CSS](#) - styling CSS library
+## Deploy
 
-# Feature
+Deploy on all platforms with Expo Application Services (EAS).
 
--   page 1 : diagram, budget mu tinggal
--   page 2 : form buat nambahin komponen dan update dari komponen yg udah ada
--   page 3 : set budget perjalanan
+- Deploy the website: `npx eas-cli deploy` — [Learn more](https://docs.expo.dev/eas/hosting/get-started/)
+- Deploy on iOS and Android using: `npx eas-cli build` — [Learn more](https://expo.dev/eas)
+
+## 📝 Notes
+
+- [Expo Router: Docs](https://docs.expo.dev/router/introduction/)
