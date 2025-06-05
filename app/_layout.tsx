@@ -6,6 +6,9 @@ export default function Layout() {
         await db.execAsync(
             "CREATE TABLE IF NOT EXISTS Components (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount INTEGER)"
         );
+        await db.execAsync(
+            "CREATE TABLE IF NOT EXISTS Budgets (id INTEGER PRIMARY KEY AUTOINCREMENT, amount INTEGER)"
+        );
     };
 
     return (

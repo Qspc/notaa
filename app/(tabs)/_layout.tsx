@@ -14,11 +14,24 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
+                name="form"
+                options={{
+                    title: "form",
+                    tabBarIcon: ({ color }) => (
+                        <FontAwesome
+                            size={28}
+                            name="sticky-note"
+                            color={color}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
                 name="settings"
                 options={{
                     title: "Settings",
                     tabBarIcon: ({ color }) => (
-                        <FontAwesome size={28} name="cog" color={color} />
+                        <FontAwesome size={28} name="dollar" color={color} />
                     ),
                 }}
             />
