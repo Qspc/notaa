@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { SQLiteProvider, SQLiteDatabase } from "expo-sqlite";
+import Provider from "../component/state";
 
 export default function Layout() {
     const createDbIfNeeded = async (db: SQLiteDatabase) => {
@@ -12,10 +13,15 @@ export default function Layout() {
     };
 
     return (
-        <SQLiteProvider databaseName="test.db" onInit={createDbIfNeeded}>
-            <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            </Stack>
-        </SQLiteProvider>
+        <Provider>
+            <SQLiteProvider databaseName="test.db" onInit={createDbIfNeeded}>
+                <Stack>
+                    <Stack.Screen
+                        name="(tabs)"
+                        options={{ headerShown: false }}
+                    />
+                </Stack>
+            </SQLiteProvider>
+        </Provider>
     );
 }

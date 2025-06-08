@@ -54,7 +54,6 @@ export default function Tab() {
     const [data, setData] = useState<ComponentProps[]>([]);
     const [budget, setBudget] = useState<BudgetProps[]>([]);
     const [chartData, setChartData] = useState<any[]>([]);
-
     const database = useSQLiteContext();
 
     const loadData = async () => {
