@@ -3,13 +3,50 @@ import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { BudgetProps } from "../../component/types";
 import { formatThreeDigit } from "../../component/helper";
+import { background } from "../styles/style";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function Budget() {
     const [data, setData] = useState("");
     const database = useSQLiteContext();
     const [isBudget, setIsBudget] = useState(false);
     const [showForm, setShowForm] = useState(false);
-    const [amount, setAmount] = useState(0);
+    // const [amount, setAmount] = useState(0);
+    const queryClient = useQueryClient();
+
+    const { data: amount } = useQuery({
+        queryKey: ["budget", "amount"],
+        queryFn: async () => {
+            const res = await database.getAllAsync<BudgetProps>(
+                "SELECT * FROM Budgets"
+            );
+            if (res && res.length > 0) {
+                setShowForm(false);
+                setData(String(res[0].amount));
+            } else {
+                setShowForm(true);
+                setData("");
+            }
+            return res[0].amount;
+        },
+    });
+    const post = useMutation({
+        mutationFn: async ({ isUpdated }: any) => {
+            if (isUpdated === "create")
+                await database.runAsync(
+                    "INSERT INTO Budgets (amount) VALUES (?)",
+                    [parseInt(data, 10) || 0]
+                );
+            if (isUpdated === "update") {
+                await database.runAsync("UPDATE Budgets SET amount = ?", [
+                    parseInt(data, 10) || 0,
+                ]);
+            }
+            if (isUpdated === "delete") {
+                await database.runAsync("DELETE FROM Budgets");
+            }
+        },
+    });
 
     const handleSubmit = async (isUpdated) => {
         try {
@@ -19,7 +56,7 @@ export default function Budget() {
                     [parseInt(data, 10) || 0]
                 );
                 Alert.alert("Success", "Budget berhasil diperbarui");
-                setAmount(parseInt(data, 10) || 0);
+                // setAmount(parseInt(data, 10) || 0);
             } else {
                 const res = await database.runAsync(
                     "INSERT INTO Budgets (amount) VALUES (?)",
@@ -36,7 +73,13 @@ export default function Budget() {
     };
     const handleDelete = async () => {
         try {
-            const res = await database.runAsync("DELETE FROM Budgets");
+            // const res = await database.runAsync("DELETE FROM Budgets");
+            const res = await post.mutateAsync({
+                isUpdated: "delete",
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["budget"],
+            });
             setIsBudget(false);
             setShowForm(true);
             Alert.alert("Success", "Budget berhasil dihapus");
@@ -54,7 +97,7 @@ export default function Budget() {
             if (result && result.length > 0) {
                 setIsBudget(true);
                 setShowForm(false);
-                setAmount(result[0].amount);
+                // setAmount(result[0].amount);
                 setData(String(result[0].amount));
             } else {
                 setShowForm(true);
@@ -66,62 +109,56 @@ export default function Budget() {
     }, [isBudget]);
 
     return (
-        <View style={{ flex: 1, gap: 10, padding: 20 }}>
-            {isBudget ? (
-                <Text>Budget Kamu: Rp{formatThreeDigit(amount)}</Text>
-            ) : (
-                <Text>Tambahkan Budget</Text>
-            )}
-            {showForm ? (
-                <>
-                    <TextInput
-                        id="amount"
-                        placeholder="Masukkan nilai"
-                        style={{
-                            minWidth: 160,
-                            borderColor: "blue",
-                            borderWidth: 1,
-                            padding: 10,
+        <View style={background.container}>
+            <View style={background.section}>
+                {isBudget ? (
+                    <Text>Budget Kamu: Rp{formatThreeDigit(amount)}</Text>
+                ) : (
+                    <Text>Tambahkan Budget</Text>
+                )}
+                <TextInput
+                    id="amount"
+                    placeholder="80000"
+                    style={{
+                        minWidth: 160,
+                        borderColor: "blue",
+                        borderWidth: 1,
+                        padding: 10,
+                    }}
+                    // onBlur={(v) => formatThreeDigit(v.nativeEvent.text)}
+                    keyboardType="numeric"
+                    onChangeText={(text) => setData(text)}
+                    value={data}
+                />
+                <View
+                    style={{
+                        display: "flex",
+                        width: "100%",
+                        flexDirection: "row",
+                        gap: 10,
+                    }}
+                >
+                    <Button
+                        title={"Edit"}
+                        onPress={() => {
+                            handleSubmit(true);
                         }}
-                        // onBlur={(v) => formatThreeDigit(v.nativeEvent.text)}
-                        keyboardType="numeric"
-                        onChangeText={(text) => setData(text)}
-                        value={data}
                     />
-                    {data ? (
-                        <View
-                            style={{
-                                display: "flex",
-                                width: "100%",
-                                flexDirection: "row",
-                                gap: 10,
-                            }}
-                        >
-                            <Button
-                                title={"Edit"}
-                                onPress={() => {
-                                    handleSubmit(true);
-                                }}
-                            />
-                            <Button
-                                title={"batal"}
-                                color={"red"}
-                                onPress={() => {
-                                    setShowForm(false);
-                                }}
-                            />
-                        </View>
-                    ) : (
-                        <Button
-                            title={data ? "Edit" : "Submit"}
-                            onPress={() => {
-                                handleSubmit(data ? true : false);
-                            }}
-                        />
-                    )}
-                </>
-            ) : (
-                <>
+                    <Button
+                        title={"batal"}
+                        color={"red"}
+                        onPress={() => {
+                            setShowForm(false);
+                        }}
+                    />
+                </View>
+                <Button
+                    title={data ? "Edit" : "Submit"}
+                    onPress={() => {
+                        handleSubmit(data ? true : false);
+                    }}
+                />
+                <View>
                     <View
                         style={{
                             display: "flex",
@@ -142,16 +179,8 @@ export default function Budget() {
                             onPress={handleDelete}
                         />
                     </View>
-                </>
-            )}
+                </View>
+            </View>
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-});
