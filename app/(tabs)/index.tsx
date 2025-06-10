@@ -20,9 +20,9 @@ const chartConfig = {
     backgroundGradientTo: "#08130D",
     backgroundGradientToOpacity: 0.5,
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
+    strokeWidth: 2,
     barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
+    useShadowColorFromDataset: false,
 };
 
 export default function Tab() {
@@ -40,7 +40,9 @@ export default function Tab() {
                 setChartData(
                     res.map((item) => ({
                         name: item.name,
-                        population: +(+item.amount / total).toFixed(2),
+                        population: Number(
+                            ((+item.amount / total) * 100).toFixed(2)
+                        ),
                         color: generateRandomHexColor(),
                         legendFontColor: "#7F7F7F",
                         legendFontSize: 8,
@@ -143,7 +145,7 @@ export default function Tab() {
                                 gap: 4,
                             }}
                         >
-                            <Text>Budget kamu tersisa:</Text>
+                            <Text>Anggaran kamu tersisa:</Text>
                             <Text style={{ fontWeight: "bold", fontSize: 28 }}>
                                 Rp
                                 {formatThreeDigit(
@@ -164,7 +166,7 @@ export default function Tab() {
                                     opacity: 0.6,
                                 }}
                             >
-                                Budget anda kosong
+                                Anggaran anda belum diisi
                             </Text>
                         </View>
                     )}

@@ -16,7 +16,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="form"
                 options={{
-                    title: "form",
+                    title: "Form",
                     tabBarIcon: ({ color }) => (
                         <FontAwesome
                             size={28}
@@ -27,9 +27,9 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="settings"
+                name="anggaran"
                 options={{
-                    title: "Settings",
+                    title: "Anggaran",
                     tabBarIcon: ({ color }) => (
                         <FontAwesome size={28} name="dollar" color={color} />
                     ),
