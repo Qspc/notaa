@@ -1,38 +1,47 @@
 {
-  "name": "my-app",
-  "version": "1.0.0",
-  "main": "expo-router/entry",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "deploy": "npx expo export -p web && npx eas-cli@latest deploy"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^5.80.6",
-    "expo": "53.0.11",
-    "expo-constants": "~17.1.4",
-    "expo-linking": "~7.1.4",
-    "expo-router": "~5.1.0",
-    "expo-splash-screen": "~0.30.9",
-    "expo-sqlite": "~15.2.12",
-    "expo-status-bar": "~2.2.3",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "react-native": "0.79.3",
-    "react-native-chart-kit": "^6.12.0",
-    "react-native-dropdown-picker": "^5.4.6",
-    "react-native-gesture-handler": "~2.24.0",
-    "react-native-safe-area-context": "5.4.0",
-    "react-native-screens": "~4.11.1",
-    "react-native-web": "^0.20.0",
-    "expo-dev-client": "~5.2.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@types/react": "~19.0.10",
-    "typescript": "~5.8.3"
-  },
-  "private": true
+    "name": "my-app",
+    "version": "1.0.0",
+    "main": "expo-router/entry",
+    "scripts": {
+        "start": "expo start",
+        "android": "expo start --android",
+        "ios": "expo start --ios",
+        "web": "expo start --web",
+        "deploy": "npx expo export -p web && npx eas-cli@latest deploy"
+    },
+    "dependencies": {
+        "@tanstack/react-query": "^5.80.6",
+        "expo": "53.0.11",
+        "expo-constants": "~17.1.4",
+        "expo-linking": "~7.1.4",
+        "expo-router": "~5.1.0",
+        "expo-splash-screen": "~0.30.9",
+        "expo-sqlite": "~15.2.12",
+        "expo-status-bar": "~2.2.3",
+        "react": "19.0.0",
+        "react-dom": "19.0.0",
+        "react-native": "0.79.3",
+        "react-native-chart-kit": "^6.12.0",
+        "react-native-dropdown-picker": "^5.4.6",
+        "react-native-gesture-handler": "~2.24.0",
+        "react-native-safe-area-context": "5.4.0",
+        "react-native-screens": "~4.11.1",
+        "react-native-web": "^0.20.0",
+        "expo-dev-client": "~5.2.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.20.0",
+        "@types/react": "~19.0.10",
+        "typescript": "~5.8.3"
+    },
+    "private": true,
+    "expo": {
+        "doctor": {
+            "reactNativeDirectoryCheck": {
+                "exclude": [
+                    "react-native-chart-kit"
+                ]
+            }
+        }
+    }
 }

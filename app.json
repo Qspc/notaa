@@ -1,19 +1,38 @@
 {
     "expo": {
         "scheme": "acme",
-        "plugins": ["expo-router", "expo-sqlite"],
+        "plugins": [
+            "expo-router",
+            [
+                "expo-sqlite",
+                {
+                    "enableFTS": false
+                }
+            ]
+        ],
         "name": "my-app",
         "slug": "my-app",
+        "splash": {
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
         "assetBundlePatterns": ["**/*"],
         "extra": {
-            "router": {},
+            "router": {
+                "origin": false
+            },
             "eas": {
                 "projectId": "12bd2b04-70ed-4993-81bc-d5629256825a"
             }
         },
         "android": {
             "package": "com.shibgotalloh.myapp",
-            "minSdkVersion": 21
-        }
+            "adaptiveIcon": {
+                "backgroundColor": "#ffffff"
+            }
+        },
+        "version": "1.0.4",
+        "orientation": "portrait",
+        "userInterfaceStyle": "light"
     }
 }
