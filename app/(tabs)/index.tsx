@@ -6,6 +6,7 @@ import { PieChart } from "react-native-chart-kit";
 import {
     formatThreeDigit,
     generateRandomHexColor,
+    palleteColors,
     sumAmount,
 } from "../../component/helper";
 import { getAllBudgets, getAllComponents } from "../../component/api";
@@ -38,12 +39,12 @@ export default function Tab() {
             if (res.length > 0) {
                 const total = sumAmount(res);
                 setChartData(
-                    res.map((item) => ({
+                    res.map((item, index) => ({
                         name: item.name,
-                        population: Number(
+                        amount: Number(
                             ((+item.amount / total) * 100).toFixed(2)
                         ),
-                        color: generateRandomHexColor(),
+                        color: palleteColors(index),
                         legendFontColor: "#7F7F7F",
                         legendFontSize: 8,
                     }))
@@ -128,7 +129,7 @@ export default function Tab() {
                                 width={300}
                                 height={200}
                                 chartConfig={chartConfig}
-                                accessor={"population"}
+                                accessor={"amount"}
                                 backgroundColor={"transparent"}
                                 paddingLeft={"15"}
                                 // center={[10, 50]}
@@ -137,22 +138,44 @@ export default function Tab() {
                         </View>
                     )}
                     {budget?.length > 0 ? (
-                        <View
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                gap: 4,
-                            }}
-                        >
-                            <Text>Anggaran kamu tersisa:</Text>
-                            <Text style={{ fontWeight: "bold", fontSize: 28 }}>
-                                Rp
-                                {formatThreeDigit(
-                                    budget[0].amount - sumAmount(data)
-                                )}{" "}
-                            </Text>
-                        </View>
+                        <>
+                            {sumAmount(data) > budget[0].amount ? (
+                                <Text
+                                    style={{
+                                        paddingVertical: 10,
+                                        fontWeight: "bold",
+                                        borderColor: "#E0E0E0",
+                                        borderWidth: 1,
+                                        textAlign: "center",
+                                        fontSize: 28,
+                                    }}
+                                >
+                                    Anggaran kamu habis
+                                </Text>
+                            ) : (
+                                <View
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        gap: 4,
+                                    }}
+                                >
+                                    <Text>Anggaran kamu tersisa:</Text>
+                                    <Text
+                                        style={{
+                                            fontWeight: "bold",
+                                            fontSize: 28,
+                                        }}
+                                    >
+                                        Rp
+                                        {formatThreeDigit(
+                                            budget[0].amount - sumAmount(data)
+                                        )}{" "}
+                                    </Text>
+                                </View>
+                            )}
+                        </>
                     ) : (
                         <View>
                             <Text
